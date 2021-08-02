@@ -1,0 +1,36 @@
+const ATMDeposit = ({onChange}) => {  
+  return (
+    <label className="label huge">
+      Deposit:&nbsp;
+      <input type="number" onChange={onChange}></input>
+      <input type="submit" value="Submit"></input>
+    </label>
+  );
+};
+
+const Account = () => {
+  const [transactionState, setTransactionState] = React.useState(0);
+  const [totalState, setTotalState] = React.useState(0);
+  let status = `Account Balance $${totalState}`;
+  console.log('Account Rendered');
+  
+  const handleChange = event => {
+    setTransactionState(Number(event.target.value));
+    console.log(`handleChange ${event.target.value}`);
+  };
+  
+  const handleSubmit = () => {
+    setTotalState(totalState + transactionState);
+    event.preventDefault();
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2 id="total">{status}</h2>
+      <ATMDeposit onChange={handleChange}> Deposit</ATMDeposit>
+    </form>
+  );
+};
+
+// ========================================
+ReactDOM.render(<Account />, document.getElementById("root"));
