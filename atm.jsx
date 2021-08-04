@@ -1,35 +1,76 @@
-const ATMTransaction = ({onChange, isDeposit, transactionState}) => {
-  const choice = ['Deposit', 'Withdraw'];
+const ATMSelect = ({setScreen, setIsDeposit}) => {
   return (
-    <label className="label huge">
-      <h3> {choice[Number(!isDeposit)]}</h3>
-      <input type="number" value={transactionState} onChange={onChange} min={0}></input>
-      <input type="submit" value="Submit"></input>
-    </label>
+    <>
+      <h3>Welcome</h3>
+      <h4>Choose a Transaction</h4>
+      <button onClick={() => {setScreen('transaction'); setIsDeposit(false);}}>Withdraw</button>
+      <button onClick={() => {setScreen('transaction'); setIsDeposit(true);}}>Deposit</button>
+      <button onClick={() => setScreen('balance')}>Balance</button>
+    </>
   );
-};
+}
+
+const ATMTransaction = ({choice, onChange, onTransaction, isDeposit, transactionState, onBack, overdraw, overdrawWarning}) => {
+  return (
+    <>
+      <h3>{choice[Number(!isDeposit)]} Amount</h3>
+      <input type="number" value={transactionState} onChange={onChange} min={0}></input>
+      <button onClick={onTransaction}>Submit</button>
+      <button onClick={onBack}>Back</button>
+      <div className="withdraw-error">{overdrawWarning[Number(overdraw)]}</div>
+    </>
+  );
+}
+
+const ATMBalance = ({onBack, balance}) => {
+  return (
+    <>
+      <h3>Your Account Balance Is</h3>
+      <h3>${balance}</h3>
+      <button onClick={onBack}>Back</button>
+    </>
+  );
+}
+
+const ATMSuccess = ({choice, isDeposit, setScreen}) => {
+  setTimeout(
+    () => {setScreen('select')}, 3500);
+  return (
+    <>
+      <h3>Your {choice[Number(!isDeposit)]}</h3>
+      <h3>Was Successful</h3><br />
+      <h3>Thank You For</h3>
+      <h3>Using Our ATM</h3>
+    </>
+  );
+}
 
 const Account = () => {
+  const [screen, setScreen] = React.useState('select');
   const [transactionState, setTransactionState] = React.useState(0);
   const [totalState, setTotalState] = React.useState(0);
   const [isDeposit, setIsDeposit] = React.useState(true);
   const [overdraw, setOverdraw] = React.useState(false);
 
-  let status = `Account Balance $${totalState}`;
-  let overdrawWarning = ['', 'You don\'t have that much to withdraw.']
+  const overdrawWarning = ['', 'You don\'t have that much to withdraw.']
+  const choice = ['Deposit', 'Withdraw'];
   console.log('Account Rendered');
   
   const handleChange = event => {
     const amount = Number(event.target.value);
-    setTransactionState(
-      amount >= 0 ? amount : 0
-    );
-    console.log(`handleChange ${event.target.value}`);
+    setTransactionState(amount);
+    console.log(`handleChange ${amount}`);
   };
+
+  const handleBack = () => {
+    setScreen('select');
+    setOverdraw(false);
+  }
   
-  const handleSubmit = () => {
+  const handleTransaction = () => {
     if (!isDeposit && transactionState > totalState) {
       setOverdraw(true);
+      return;
     } else {
       setOverdraw(false);
       setTotalState(
@@ -37,17 +78,42 @@ const Account = () => {
       );
     }
     setTransactionState(0);
+    setScreen('success');
     event.preventDefault();
+
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2 id="total">{status}</h2>
-      <button onClick={() => setIsDeposit(false)}>Withdraw</button>
-      <button onClick={() => setIsDeposit(true)}>Deposit</button>
-      <ATMTransaction onChange={handleChange} isDeposit={isDeposit} setTransactionState={transactionState}></ATMTransaction>
-      <div style={{color: 'red'}}>{overdrawWarning[Number(overdraw)]}</div>
-    </form>
+    <>
+      {screen === 'select' &&
+        <ATMSelect
+          setScreen={setScreen}
+          setIsDeposit={setIsDeposit}
+        ></ATMSelect>
+      }
+
+      {screen === 'transaction' &&
+        <>
+          <ATMTransaction 
+            choice={choice}
+            onChange={handleChange}
+            onTransaction={handleTransaction}
+            isDeposit={isDeposit} setTransactionState={transactionState}
+            onBack={handleBack}
+            overdraw={overdraw}
+            overdrawWarning={overdrawWarning}
+          ></ATMTransaction>
+        </>
+      }
+
+      {screen === 'balance' && 
+        <ATMBalance onBack={handleBack} balance={totalState}></ATMBalance>
+      }
+
+      {screen === 'success' && 
+        <ATMSuccess choice={choice} isDeposit={isDeposit} setScreen={setScreen}></ATMSuccess>
+      }
+    </>
   );
 };
 

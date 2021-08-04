@@ -1,0 +1,46 @@
+body {
+  text-align: center;
+}
+
+.screen {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  margin: auto;
+  border: 20px ridge #BCF;
+  background-color: blue;
+  width: 400px;
+  height: 340px;
+  color: #DDD;
+}
+
+button {
+  background-color: #0c80f3;
+  border: 2px solid #CBF;
+  border-radius: 10px;
+  width: 150px;
+  margin: 10px;
+}
+
+.withdraw-error {
+  position: absolute;
+  color: red;
+  top: 30px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input {
+  text-align: center;
+}
