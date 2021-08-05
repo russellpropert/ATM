@@ -2,7 +2,7 @@
 ### Description
 This exercise simulates an ATM machine. It demonstrates using state with React.
 ### Improvements I Made To The Project
-The original project was only one screen that had two buttons for withdrawing and depositing. The amount field and the submission button were on the same screen. I made the following improvements.
+The original project was only one screen with two buttons for withdrawing or depositing, an input field, and a submit button. I made the following improvements.
 - Separate welcome screen where the transaction type can be selected
 - Balance inquiry option
 - Confirmation screen at the end of the transaction. 
