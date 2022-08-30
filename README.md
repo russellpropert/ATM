@@ -2,7 +2,7 @@
 ## Description
 This exercise simulates an ATM machine. It demonstrates using state with React.
 ## How To Run
-Fork the repository and clone it to your machine. If you don't have npm installed, you can get it by installing [node.js](https://nodejs.org/en/download/). Run 'npx http-server' from the command line to run a temporary [http-server](https://www.npmjs.com/package/http-server) or install http-server as a global command by running 'npm install --global http-server'. Run 'http-server' to start a server. Run 'http-server -c-1' to prevent the browser from caching if you want to make changes. You can then access the page by going to localhost:8080 in your web browser.
+Fork the repository and clone it to your machine. If you don't have npm installed, you can get it by installing [node.js](https://nodejs.org/en/download/). Run 'npx http-server' from the command line to run a temporary [http-server](https://www.npmjs.com/package/http-server) or install http-server as a global command by running 'npm install --global http-server’. If you install the global http-server command, run 'http-server' to start a server or run 'http-server -c-1' to prevent the browser from caching if you want to make changes. You can then access the page by going to localhost:8080 in your web browser.
 ## Improvements I Made To The Project
 The original project was only one screen with two buttons for withdrawing or depositing, an input field, and a submit button. I made the following improvements.
 - Separate welcome screen where the transaction type can be selected
